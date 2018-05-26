@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 
 return [
+    //静态资源设置
+
     // +----------------------------------------------------------------------
     // | 应用设置
     // +----------------------------------------------------------------------
@@ -138,10 +140,15 @@ return [
         'taglib_begin' => '{',
         // 标签库标签结束标记
         'taglib_end'   => '}',
+        //模板布局
+        'layout_on'     =>  true,
+        'layout_name'   =>  'Layout/default',
     ],
 
     // 视图输出字符串内容替换
-    'view_replace_str'       => [],
+    'view_replace_str'       => [
+        '__STATIC__' => '/tp5/public/static'
+    ],
     // 默认跳转页面对应的模板文件
     'dispatch_success_tmpl'  => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',
     'dispatch_error_tmpl'    => THINK_PATH . 'tpl' . DS . 'dispatch_jump.tpl',

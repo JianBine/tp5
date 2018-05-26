@@ -10,10 +10,49 @@ Target Server Type    : MYSQL
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-05-23 22:50:56
+Date: 2018-05-28 23:07:24
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for `mibine_department`
+-- ----------------------------
+DROP TABLE IF EXISTS `mibine_department`;
+CREATE TABLE `mibine_department` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mibine_department
+-- ----------------------------
+INSERT INTO `mibine_department` VALUES ('1', '研发部', '2018-05-28 21:21:21', '2018-05-28 21:21:25');
+INSERT INTO `mibine_department` VALUES ('2', '行政部', '2018-05-28 21:21:42', '2018-05-28 21:21:45');
+
+-- ----------------------------
+-- Table structure for `mibine_employee`
+-- ----------------------------
+DROP TABLE IF EXISTS `mibine_employee`;
+CREATE TABLE `mibine_employee` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) DEFAULT NULL COMMENT '员工名',
+  `sex` tinyint(4) DEFAULT NULL COMMENT '0:男；1:女',
+  `department_id` int(11) DEFAULT NULL COMMENT '所在部门ID',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mibine_employee
+-- ----------------------------
+INSERT INTO `mibine_employee` VALUES ('1', 'mibine', '0', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `mibine_employee` VALUES ('2', 'mibine', '0', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `mibine_employee` VALUES ('3', 'mibine', '0', '1', '2018-05-27 07:40:21', '2018-05-27 07:40:21');
 
 -- ----------------------------
 -- Table structure for `mibine_order`

@@ -10,9 +10,9 @@ class Index extends Controller
      */
     public function index()
     {
-        $title = 'money';
-        $this->view->assign('title',$title);
-        return $this->fetch('Index/index');
+//        $title = 'money';
+//        $this->view->assign('title',$title);
+        return $this->fetch('Index/home');
     }
 
 }
