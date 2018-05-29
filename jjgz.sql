@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-05-28 23:07:24
+Date: 2018-05-29 23:18:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,14 +45,15 @@ CREATE TABLE `mibine_employee` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_employee
 -- ----------------------------
-INSERT INTO `mibine_employee` VALUES ('1', 'mibine', '0', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
-INSERT INTO `mibine_employee` VALUES ('2', 'mibine', '0', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 INSERT INTO `mibine_employee` VALUES ('3', 'mibine', '0', '1', '2018-05-27 07:40:21', '2018-05-27 07:40:21');
+INSERT INTO `mibine_employee` VALUES ('10', '小月儿', '1', '1', '2018-05-29 21:48:23', '2018-05-29 23:14:07');
+INSERT INTO `mibine_employee` VALUES ('16', '小熊', '0', '1', '2018-05-29 23:03:18', '2018-05-29 23:14:31');
+INSERT INTO `mibine_employee` VALUES ('17', '关雎', '0', '1', '2018-05-29 23:16:47', '2018-05-29 23:16:47');
 
 -- ----------------------------
 -- Table structure for `mibine_order`
