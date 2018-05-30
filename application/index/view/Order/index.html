@@ -1,0 +1,210 @@
+<h3>工作管理\订单列表</h3>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"></div>
+    <div class="panel-body">
+        <div>
+            <button class="btn btn-default btn_refresh" type="submit">刷新</button>
+            <button class="btn btn-default" type="submit" data-toggle="modal" data-target="#addView">添加</button>
+        </div>
+    </div>
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th></th>
+                <th>编号</th>
+                <th>订单名</th>
+                <th>最大报警数</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
+            {volist name='list' id='vo' key="k"}
+            <tr>
+                <td width="30px"><input type="checkbox"></td>
+                <td>{$k}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.max_num}</td>
+                <td>{$vo.create_time}</td>
+                <td>
+                    <button class="btn btn-default btn-sm btn_edit" value="{$vo.id}" data-toggle="modal" data-target="#editView" type="submit">编辑</button>
+                    <button class="btn btn-default btn-sm btn_del" value="{$vo.id}" type="submit">删除</button>
+                </td>
+            </tr>
+            {/volist}
+        </table>
+        <div style="text-align: center;">{$page}</div>
+    </div>
+</div>
+<!--添加页面-->
+<div class="modal fade" id="addView" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >订单添加</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="ordername">订单名</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="ordername" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="max_num">最大报警数</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="max_num" placeholder="0" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="add" >添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--编辑页面-->
+<div class="modal fade" id="editView" tabindex="-2" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >订单编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <input type="hidden" value="" id="order_id"/>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="edit_ordername">订单名</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="edit_ordername" placeholder="名称" required>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="edit_max_num">最大报警数</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="edit_max_num" placeholder="0" value="0" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="edit" >编辑</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //添加
+    $('#add').click(function(){
+        if($('#ordername').val() == ''){
+            alert("请填写订单名！");
+            return false;
+        }
+        if($('#max_num').val() == ''){
+            alert("请填写最大报警数！");
+            return false;
+        }
+        var oParam = {
+            ordername:$('#ordername').val(),
+            max_num:$('#max_num').val()
+        };
+        var jParam = JSON.stringify(oParam);
+        $.ajax({
+            type: "POST",
+            url: "{:url('OrderManager/save')}",
+            data: 'data=' + jParam,
+            success: function(data){
+                var data = JSON.parse(data);
+                if(data.status == 'success'){
+                    alert("添加成功！");
+                    $('#addView').modal('toggle');
+                    window.location.href = '{:url("OrderManager/index")}';
+                }else{
+                    alert('添加失败！');
+                }
+            }
+        });
+    });
+    //删除
+    $('.btn_del').click(function (e) {
+        var target = e.target || window.target;
+        var id = $(target).attr("value");
+        if(confirm("确定删除吗？")){
+            $.ajax({
+                type: "POST",
+                url: "{:url('OrderManager/delete')}",
+                data: 'id=' + id,
+                success: function(data){
+                    var data = JSON.parse(data);
+                    if(data.status == 'success'){
+                        alert("删除成功！");
+                        window.location.href = '{:url("OrderManager/index")}';
+                    }else{
+                        alert('删除失败！');
+                    }
+                }
+            });
+        }
+    });
+    //编辑页面初始化
+    $('.btn_edit').click(function (e) {
+        var target = e.target || window.target;
+        var id = $(target).attr("value");
+        $.ajax({
+            type: "POST",
+            url: "{:url('OrderManager/edit')}",
+            data: 'id=' + id,
+            success: function(data){
+                var data = JSON.parse(data);
+                if(data.status == 'success'){
+                    data = data.data;
+                    $('#order_id').val(data.id);
+                    $('#edit_ordername').val(data.name);
+                    $('#edit_max_num').val(data.max_num);
+                }
+            }
+        });
+    });
+    //编辑
+    $('#edit').click(function(){
+        if($('#edit_ordername').val() == ''){
+            alert("请填写订单名！");
+            return false;
+        }
+        if($('#edit_max_num').val() == ''){
+            alert("请填写最大报警数！");
+            return false;
+        }
+        var oParam = {
+            ordername:$('#edit_ordername').val(),
+            max_num:$('#edit_max_num').val(),
+        };
+        var jParam = JSON.stringify(oParam);
+        var id = $('#order_id').val();
+        $.ajax({
+            type: "POST",
+            url: "{:url('OrderManager/update')}",
+            data: 'id='+ id +'&data=' + jParam,
+            success: function(data){
+                var data = JSON.parse(data);
+                if(data.status == 'success'){
+                    alert("编辑成功！");
+                    $('#editView').modal('toggle');
+                    window.location.href = '{:url("OrderManager/index")}';
+                }else{
+                    alert('编辑失败！');
+                }
+            }
+        });
+    });
+    //刷新
+    $('.btn_refresh').click(function () {
+        window.location.href = '{:url("OrderManager/index")}';
+    });
+</script>

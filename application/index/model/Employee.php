@@ -8,6 +8,6 @@ class Employee extends Model
 {
     public function department()
     {
-        return $this->hasOne('Department',department_id,'id');
+        return $this->hasOne('Department','id');
     }
 }

@@ -1,0 +1,245 @@
+<h3>工作管理\人员名单</h3>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading"></div>
+    <div class="panel-body">
+        <div>
+            <button class="btn btn-default btn_refresh" type="submit">刷新</button>
+            <button class="btn btn-default" type="submit" data-toggle="modal" data-target="#addView">添加</button>
+        </div>
+    </div>
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-condensed table-hover">
+            <tr>
+                <th></th>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>部门</th>
+                <th>添加时间</th>
+                <th>操作</th>
+            </tr>
+            <!--<tr>-->
+                <!--<td width="30px"><input type="checkbox"></td>-->
+                <!--<td>1</td>-->
+                <!--<td>mibine</td>-->
+                <!--<td>男</td>-->
+                <!--<td>研发部</td>-->
+                <!--<td>2018-05-24 14:05:00</td>-->
+            <!--</tr>-->
+            {volist name='list' id='employee' key="k"}
+            <tr>
+                <td width="30px"><input type="checkbox"></td>
+                <td>{$k}</td>
+                <td>{$employee.name}</td>
+                {if condition="$employee.sex eq '0'"}
+                <td>男</td>
+                {else /}
+                <td>女</td>
+                {/if}
+                <td>{$employee.department_id}</td>
+                <td>{$employee.create_time}</td>
+                <td>
+                    <button class="btn btn-default btn-sm btn_edit" value="{$employee.id}" data-toggle="modal" data-target="#editView" type="submit">编辑</button>
+                    <button class="btn btn-default btn-sm btn_del" value="{$employee.id}" type="submit">删除</button>
+                </td>
+            </tr>
+            {/volist}
+        </table>
+        <div style="text-align: center;">{$page}</div>
+    </div>
+</div>
+<!--添加页面-->
+<div class="modal fade" id="addView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">员工添加</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="username">姓名</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="username" placeholder="姓名" required>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="sex">性别</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="sex">
+                                <option value="0">男</option>
+                                <option value="1">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="department">所在部门</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="department">
+                                {volist name="departInfos" id="vo"}
+                                    <option value="{$vo.id}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="add" >添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--编辑页面-->
+<div class="modal fade" id="editView" tabindex="-2" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" >员工编辑</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <input type="hidden" value="" id="employee_id"/>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="edit_username">姓名</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="text" id="edit_username" placeholder="姓名" required>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="edit_sex">性别</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="edit_sex">
+                                <option value="0">男</option>
+                                <option value="1">女</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="edit_department">所在部门</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="edit_department">
+                                {volist name="departInfos" id="vo"}
+                                <option value="{$vo.id}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="edit" >编辑</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+//添加
+$('#add').click(function(){
+    if($('#username').val() == ''){
+        alert("请填写姓名！");
+        return false;
+    }
+    var oParam = {
+        username:$('#username').val(),
+        sex:$('#sex').val(),
+        departId:$('#department').val()
+    };
+    var jParam = JSON.stringify(oParam);
+    $.ajax({
+        type: "POST",
+        url: "{:url('EmployeeManager/save')}",
+        data: 'data=' + jParam,
+        success: function(data){
+            var data = JSON.parse(data);
+            if(data.status == 'success'){
+                alert("添加成功！");
+                $('#addView').modal('toggle');
+                window.location.href = '{:url("EmployeeManager/index")}';
+            }else{
+                alert('添加失败！');
+            }
+        }
+    });
+});
+//删除
+$('.btn_del').click(function (e) {
+    var target = e.target || window.target;
+    var id = $(target).attr("value");
+    if(confirm("确定删除吗？")){
+        $.ajax({
+            type: "POST",
+            url: "{:url('EmployeeManager/delete')}",
+            data: 'id=' + id,
+            success: function(data){
+                var data = JSON.parse(data);
+                if(data.status == 'success'){
+                    alert("删除成功！");
+                    window.location.href = '{:url("EmployeeManager/index")}';
+                }else{
+                    alert('删除失败！');
+                }
+            }
+        });
+    }
+});
+//编辑页面初始化
+$('.btn_edit').click(function (e) {
+    var target = e.target || window.target;
+    var id = $(target).attr("value");
+    $.ajax({
+        type: "POST",
+        url: "{:url('EmployeeManager/edit')}",
+        data: 'id=' + id,
+        success: function(data){
+            var data = JSON.parse(data);
+            if(data.status == 'success'){
+                data = data.data;
+                $('#employee_id').val(data.id);
+                $('#edit_username').val(data.name);
+                $('#edit_sex option[value="'+ data.sex +'"]').attr('selected','selected');
+                $('#edit_department option[value="'+ data.department_id +'"]').attr('selected','selected');
+            }
+        }
+    });
+});
+//编辑
+$('#edit').click(function(){
+    if($('#edit_username').val() == ''){
+        alert("请填写姓名！");
+        return false;
+    }
+    var oParam = {
+        username:$('#edit_username').val(),
+        sex:$('#edit_sex').val(),
+        departId:$('#edit_department').val()
+    };
+    var jParam = JSON.stringify(oParam);
+    var id = $('#employee_id').val();
+    $.ajax({
+        type: "POST",
+        url: "{:url('EmployeeManager/update')}",
+        data: 'id='+ id +'&data=' + jParam,
+        success: function(data){
+            var data = JSON.parse(data);
+            if(data.status == 'success'){
+                alert("编辑成功！");
+                $('#editView').modal('toggle');
+                window.location.href = '{:url("EmployeeManager/index")}';
+            }else{
+                alert('编辑失败！');
+            }
+        }
+    });
+});
+//刷新
+$('.btn_refresh').click(function () {
+    window.location.href = '{:url("EmployeeManager/index")}';
+});
+</script>

@@ -31,7 +31,7 @@ class EmployeeManager extends Controller
         $this->assign('list', $list);
         $this->assign('page', $page);
         $this->assign('departInfos',$departInfos);
-        return $this->fetch('Employee/list');
+        return $this->fetch('Employee/index');
     }
 
     /**
