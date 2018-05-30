@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-05-29 23:18:15
+Date: 2018-05-30 23:43:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -50,7 +50,7 @@ CREATE TABLE `mibine_employee` (
 -- ----------------------------
 -- Records of mibine_employee
 -- ----------------------------
-INSERT INTO `mibine_employee` VALUES ('3', 'mibine', '0', '1', '2018-05-27 07:40:21', '2018-05-27 07:40:21');
+INSERT INTO `mibine_employee` VALUES ('3', 'mibine', '0', '1', '2018-05-27 07:40:21', '2018-05-29 23:25:27');
 INSERT INTO `mibine_employee` VALUES ('10', '小月儿', '1', '1', '2018-05-29 21:48:23', '2018-05-29 23:14:07');
 INSERT INTO `mibine_employee` VALUES ('16', '小熊', '0', '1', '2018-05-29 23:03:18', '2018-05-29 23:14:31');
 INSERT INTO `mibine_employee` VALUES ('17', '关雎', '0', '1', '2018-05-29 23:16:47', '2018-05-29 23:16:47');
@@ -66,12 +66,14 @@ CREATE TABLE `mibine_order` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_order
 -- ----------------------------
-INSERT INTO `mibine_order` VALUES ('3', 'ST7890', '1000', '2018-05-23 13:50:57', '2018-05-23 13:50:57');
+INSERT INTO `mibine_order` VALUES ('3', 'ST7890', '1000', '2018-05-23 13:50:57', '2018-05-30 22:17:06');
+INSERT INTO `mibine_order` VALUES ('4', 'KT4340', '300', '2018-05-30 00:00:14', '2018-05-30 22:16:59');
+INSERT INTO `mibine_order` VALUES ('5', 'TG3449', '3000', '2018-05-30 22:17:27', '2018-05-30 22:17:27');
 
 -- ----------------------------
 -- Table structure for `mibine_order_detail`
@@ -80,8 +82,9 @@ DROP TABLE IF EXISTS `mibine_order_detail`;
 CREATE TABLE `mibine_order_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL COMMENT '订单号id',
-  `produre_name` varchar(255) DEFAULT NULL COMMENT '工序名称',
-  `produre_price` decimal(18,0) DEFAULT NULL COMMENT '工序单价',
+  `order_num` int(11) DEFAULT NULL COMMENT '工序号',
+  `name` varchar(255) DEFAULT NULL COMMENT '工序名称',
+  `price` decimal(18,0) DEFAULT NULL COMMENT '工序单价',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
