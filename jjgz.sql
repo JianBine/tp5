@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-05-30 23:43:41
+Date: 2018-05-31 23:11:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,7 +45,7 @@ CREATE TABLE `mibine_employee` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_employee
@@ -85,11 +85,32 @@ CREATE TABLE `mibine_order_detail` (
   `order_num` int(11) DEFAULT NULL COMMENT '工序号',
   `name` varchar(255) DEFAULT NULL COMMENT '工序名称',
   `price` decimal(18,0) DEFAULT NULL COMMENT '工序单价',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of mibine_order_detail
+-- ----------------------------
+INSERT INTO `mibine_order_detail` VALUES ('3', '5', '112', '哈哈哈12', '112', '2018-05-31 21:22:00', '2018-05-31 21:43:47');
+
+-- ----------------------------
+-- Table structure for `mibine_product`
+-- ----------------------------
+DROP TABLE IF EXISTS `mibine_product`;
+CREATE TABLE `mibine_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `order_detail_id` int(11) DEFAULT NULL,
+  `number` int(11) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of mibine_order_detail
+-- Records of mibine_product
 -- ----------------------------
 
 -- ----------------------------

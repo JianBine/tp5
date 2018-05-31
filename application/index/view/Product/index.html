@@ -1,4 +1,4 @@
-<h3>工作管理\订单详情</h3>
+<h3>工作管理\产档详情</h3>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">
@@ -10,11 +10,11 @@
                 </div>
                 <!--<label class="col-sm-1 control-label" for="ordername">起始时间：</label>-->
                 <!--<div class="col-sm-2">-->
-                    <!--<input class="form-control" type="date" id="order_num" placeholder="" required>-->
+                <!--<input class="form-control" type="date" id="order_num" placeholder="" required>-->
                 <!--</div>-->
                 <!--<label class="col-sm-1 control-label" for="ordername">结束时间：</label>-->
                 <!--<div class="col-sm-2">-->
-                    <!--<input class="form-control" type="date" id="order_num" placeholder="" required>-->
+                <!--<input class="form-control" type="date" id="order_num" placeholder="" required>-->
                 <!--</div>-->
                 <button class="btn btn-default btn-sm btn_refresh" type="submit">查询</button>
             </div>
@@ -36,6 +36,7 @@
                 <th>工序号</th>
                 <th>工序名称</th>
                 <th>单价</th>
+                <th>数量</th>
                 <th>操作</th>
             </tr>
             {volist name='list' id='vo' key="k"}
@@ -45,6 +46,7 @@
                 <td>{$vo.order_id}</td>
                 <td>{$vo.order_num}</td>
                 <td>{$vo.name}</td>
+                <td>{$vo.price}</td>
                 <td>{$vo.price}</td>
                 <td>
                     <button class="btn btn-default btn-sm btn_edit" value="{$vo.id}" data-toggle="modal" data-target="#editView" type="submit">编辑</button>
