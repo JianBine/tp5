@@ -1,4 +1,4 @@
-<h3>工作管理\订单详情</h3>
+<h5>工作管理\订单详情</h5>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">
@@ -30,8 +30,8 @@
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-condensed table-hover">
             <tr>
-                <th></th>
-                <th>编号</th>
+                <!--<th></th>-->
+                <!--<th>编号</th>-->
                 <th>订单名</th>
                 <th>工序号</th>
                 <th>工序名称</th>
@@ -40,9 +40,9 @@
             </tr>
             {volist name='list' id='vo' key="k"}
             <tr>
-                <td width="30px"><input type="checkbox"></td>
-                <td>{$k}</td>
-                <td>{$vo.order_id}</td>
+                <!--<td width="30px"><input type="checkbox"></td>-->
+                <!--<td>{$k}</td>-->
+                <td>{$vo.order.name}</td>
                 <td>{$vo.order_num}</td>
                 <td>{$vo.name}</td>
                 <td>{$vo.price}</td>
@@ -91,7 +91,7 @@
                     <div class="form-group form-group-sm">
                         <label class="col-sm-2 control-label" for="price">单价</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="price" placeholder="" required>
+                            <input class="form-control" type="text" id="price" placeholder="">
                         </div>
                     </div>
                 </form>

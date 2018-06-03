@@ -1,0 +1,60 @@
+<h5>报表统计/工资统计</h5>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading" style="height: 50px;">
+        <form class="form-horizontal" onsubmit="return false;">
+            <div class="form-group form-group-sm">
+                <!--<label class="col-sm-1 control-label" for="ordername">订单名：</label>-->
+                <!--<div class="col-sm-2">-->
+                <!--<input class="form-control" type="text" id="ordername" placeholder="" required>-->
+                <!--</div>-->
+                <label class="col-sm-1 control-label" for="fromtime">起始时间：</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="text" id="fromtime" placeholder="" autocomplete="off">
+                </div>
+                <label class="col-sm-1 control-label" for="totime">结束时间：</label>
+                <div class="col-sm-2">
+                    <input class="form-control" type="text" id="totime" placeholder="" autocomplete="off">
+                </div>
+                <button class="btn btn-default btn-sm btn_query" type="submit">查询</button>
+            </div>
+        </form>
+    </div>
+    <div class="panel-body" style="padding: 0px;">
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-condensed table-hover">
+                <tr>
+                    <!--<th></th>-->
+                    <!--<th>编号</th>-->
+                    <th>员工</th>
+                    <th>订单名</th>
+                    <th>工序号</th>
+                    <th>工序名称</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </table>
+            <div style="text-align: center;"></div>
+        </div>
+    </div>
+</div>
+<script>
+    laydate.render({
+        elem: '#fromtime'
+    });
+    laydate.render({
+        elem: '#totime'
+    });
+    //查询
+    $('.btn_query').click(function () {
+        // var ordername = $('#ordername').val();
+        var fromtime = $('#fromtime').val();
+        var totime = $('#totime').val();
+        // var params = 'ordername='+ ordername +'&fromtime='+ fromtime + '&totime=' + totime;
+        var params = 'fromtime='+ fromtime + '&totime=' + totime;
+        window.location.href = '{:url("ProductManager/index")}' + '?' + params;
+    });
+</script>

@@ -6,8 +6,9 @@ use think\Model;
 
 class Employee extends Model
 {
-    public function department()
+    public function Department()
     {
-        return $this->hasOne('Department','id');
+        //多对一
+        return $this->belongsTo('Department','department_id','id');
     }
 }

@@ -1,4 +1,4 @@
-<h3>工作管理\订单列表</h3>
+<h5>工作管理\订单列表</h5>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading"></div>
@@ -12,8 +12,8 @@
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-condensed table-hover">
             <tr>
-                <th></th>
-                <th>编号</th>
+                <!--<th></th>-->
+                <!--<th>编号</th>-->
                 <th>订单名</th>
                 <th>最大报警数</th>
                 <th>添加时间</th>
@@ -21,8 +21,8 @@
             </tr>
             {volist name='list' id='vo' key="k"}
             <tr>
-                <td width="30px"><input type="checkbox"></td>
-                <td>{$k}</td>
+                <!--<td width="30px"><input type="checkbox"></td>-->
+                <!--<td>{$k}</td>-->
                 <td>{$vo.name}</td>
                 <td>{$vo.max_num}</td>
                 <td>{$vo.create_time}</td>

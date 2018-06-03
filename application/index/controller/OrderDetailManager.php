@@ -19,7 +19,7 @@ class OrderDetailManager extends Controller
         //获取订单列表
         $orderInfos = Order::all();
         //分页显示订单列表
-        $list = OrderDetail::paginate(6);
+        $list = OrderDetail::with('Order')->paginate(6);
         // 获取分页显示
         $page = $list->render();
         $this->assign('orderInfos', $orderInfos);

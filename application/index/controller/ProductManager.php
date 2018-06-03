@@ -22,7 +22,22 @@ class ProductManager extends Controller
         //获取订单列表
         $orderInfos = Order::all();
         //分页显示订单列表
-        $list = Product::paginate(6);
+        $whereArray = array();
+        if(input('fromtime') && input('totime')){
+            $fromtime = input('fromtime');
+            $totime = input('totime');
+            $fromtime = date('Y-m-d 00:00:00',strtotime($fromtime));
+            $totime = date('Y-m-d 23:59:59',strtotime($totime));
+            $whereArray['create_time'] = array('between',array($fromtime,$totime));
+        }
+//        $whereArr = array();
+//        if($ordername = input('ordername')){
+//            $whereArr['name'] = $ordername;
+//        }
+        $list = Product::where($whereArray)
+            ->with(['Employee','Order','OrderDetail'])
+            ->order('create_time desc')
+            ->paginate(6);
         // 获取分页显示
         $page = $list->render();
         $this->assign('employeeInfos', $employeeInfos);
@@ -56,7 +71,17 @@ class ProductManager extends Controller
             $employee_id = $dataArray['employee_id'];
             $order_id = $dataArray['order_id'];
             $order_detail_id = $dataArray['order_detail_id'];
-            $number = $dataArray['number'];
+            $number = intval($dataArray['number']);
+            //判断是否超过报警数(该订单下，该道工序)
+            $max_num = Order::get($order_id)->max_num;
+            $count = Product::where(array('order_id' => $order_id ,'order_detail_id' => $order_detail_id))->sum('number');
+            if($count + $number > $max_num){
+                $info['value'] = $count + $number - $max_num;//超过多少
+                $info['message'] = '添加失败';
+                $info['status'] = 'failure';
+                echo json_encode($info);
+                exit();
+            }
             $Product = new Product();
             $Product->employee_id = $employee_id;
             $Product->order_id = $order_id;
@@ -147,19 +172,24 @@ class ProductManager extends Controller
             $edit_order_detail_id = $dataArray['edit_order_detail_id'];
             $edit_number = $dataArray['edit_number'];
             $id = intval($id);
+            //判断是否超过报警数(该订单下，该道工序)
+            $max_num = Order::get($edit_order_id)->max_num;
+            $count = Product::where(array('id' => array('neq',$id),'order_id' => $edit_order_id ,'order_detail_id' => $edit_order_detail_id))->sum('number');
+            if($count + $edit_number > $max_num){
+                $info['value'] = $count + $edit_number - $max_num;//超过多少
+                $info['message'] = '编辑失败';
+                $info['status'] = 'failure';
+                echo json_encode($info);
+                exit();
+            }
             $Product = Product::get($id);
             $Product->employee_id = $edit_employee_id;
             $Product->order_id = $edit_order_id;
             $Product->order_detail_id = $edit_order_detail_id;
             $Product->number = $edit_number;
             $res = $Product->save();
-            if($res != 0){
-                $info['message'] = '编辑成功';
-                $info['status'] = 'success';
-            }else{
-                $info['message'] = '编辑失败';
-                $info['status'] = 'failure';
-            }
+            $info['message'] = '编辑成功';
+            $info['status'] = 'success';
         }else{
             $info['message'] = '编辑失败';
             $info['status'] = 'failure';
