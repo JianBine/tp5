@@ -32,6 +32,7 @@
             <tr>
                 <th></th>
                 <th>编号</th>
+                <th>员工</th>
                 <th>订单名</th>
                 <th>工序号</th>
                 <th>工序名称</th>
@@ -43,11 +44,12 @@
             <tr>
                 <td width="30px"><input type="checkbox"></td>
                 <td>{$k}</td>
+                <td>{$vo.employee_id}</td>
                 <td>{$vo.order_id}</td>
-                <td>{$vo.order_num}</td>
-                <td>{$vo.name}</td>
-                <td>{$vo.price}</td>
-                <td>{$vo.price}</td>
+                <td>{$vo.order_detail_id}</td>
+                <td>{$vo.order_detail_id}</td>
+                <td>{$vo.number}</td>
+                <td>{$vo.number}</td>
                 <td>
                     <button class="btn btn-default btn-sm btn_edit" value="{$vo.id}" data-toggle="modal" data-target="#editView" type="submit">编辑</button>
                     <button class="btn btn-default btn-sm btn_del" value="{$vo.id}" type="submit">删除</button>
@@ -59,15 +61,25 @@
     </div>
 </div>
 <!--添加页面-->
-<div class="modal fade" id="addView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="addView" tabindex="-1" role="dialog" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">工序添加</h4>
+                <h4 class="modal-title" id="myModalLabel">产档添加</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
+                    <div class="form-group form-group-sm">
+                        <label class="col-sm-2 control-label" for="order_id">员工</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="employee_id">
+                                {volist name="employeeInfos" id="vo"}
+                                <option value="{$vo.id}">{$vo.name}</option>
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
                     <div class="form-group form-group-sm">
                         <label class="col-sm-2 control-label" for="order_id">订单名</label>
                         <div class="col-sm-10">
@@ -79,21 +91,17 @@
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label" for="order_num">工序号</label>
+                        <label class="col-sm-2 control-label" for="order_name">工序名</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="order_num" placeholder="" required>
+                            <select class="form-control" id="order_detail_id">
+                                <option value="">请选择</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label" for="order_name">工序名称</label>
+                        <label class="col-sm-2 control-label" for="number">数量</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="order_name" placeholder="" required>
-                        </div>
-                    </div>
-                    <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label" for="price">单价</label>
-                        <div class="col-sm-10">
-                            <input class="form-control" type="text" id="price" placeholder="" required>
+                            <input class="form-control" type="text" id="number" placeholder="" required>
                         </div>
                     </div>
                 </form>
@@ -111,37 +119,39 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" >员工编辑</h4>
+                <h4 class="modal-title">产档编辑</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal">
-                    <input type="hidden" value="" id="order_name_id"/>
+                    <input type="hidden" id="product_id">
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label" for="edit_order_id">订单名</label>
+                        <label class="col-sm-2 control-label" for="edit_employee_id">员工</label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="edit_order_id">
-                                {volist name="orderInfos" id="vo"}
-                                <option value="{$vo.id}">{$vo.name}</option>
-                                {/volist}
+                            <select class="form-control" id="edit_employee_id" disabled="disabled">
+                                <option value="">请选择</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label" for="edit_order_num">工序号</label>
+                        <label class="col-sm-2 control-label" for="edit_order_id">订单名</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="edit_order_num" placeholder="" required>
+                            <select class="form-control" id="edit_order_id">
+                                <option value="">请选择</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label" for="edit_order_name">工序名称</label>
+                        <label class="col-sm-2 control-label" for="edit_order_detail_id">工序名</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="edit_order_name" placeholder="" required>
+                            <select class="form-control" id="edit_order_detail_id">
+                                <option value="">请选择</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group form-group-sm">
-                        <label class="col-sm-2 control-label" for="edit_price">单价</label>
+                        <label class="col-sm-2 control-label" for="edit_number">数量</label>
                         <div class="col-sm-10">
-                            <input class="form-control" type="text" id="edit_price" placeholder="" required>
+                            <input class="form-control" type="text" id="edit_number" placeholder="" required>
                         </div>
                     </div>
                 </form>
@@ -154,37 +164,84 @@
     </div>
 </div>
 <script>
+    //添加订单、工序联动查询
+    $('#order_id').change(function(){
+        var order_id = $('#order_id').val();
+        $.ajax({
+            type: "POST",
+            url: "{:url('ProductManager/getOrderDetail')}",
+            data: 'id=' + order_id,
+            success: function(data){
+                var data = JSON.parse(data);
+                if(data.status == 'success'){
+                    var option = '';
+                    var infos = data.data;
+                    $.each(infos,function (k,obj) {
+                        option += '<option value="'+ obj.id +'">'+ obj.name +'</option>';
+                    });
+                    option = option ? option : '<option value="">请选择</option>';
+                    $('#order_detail_id').html(option);
+                }
+            }
+        });
+    });
+    //编辑订单、工序联动查询
+    $('#edit_order_id').change(function(){
+        var order_id = $('#edit_order_id').val();
+        $.ajax({
+            type: "POST",
+            url: "{:url('ProductManager/getOrderDetail')}",
+            data: 'id=' + order_id,
+            success: function(data){
+                var data = JSON.parse(data);
+                if(data.status == 'success'){
+                    var option = '';
+                    var infos = data.data;
+                    $.each(infos,function (k,obj) {
+                        option += '<option value="'+ obj.id +'">'+ obj.name +'</option>';
+                    });
+                    option = option ? option : '<option value="">请选择</option>';
+                    $('#edit_order_detail_id').html(option);
+                }
+            }
+        });
+    });
     //添加
     $('#add').click(function(){
-        if($('#order_num').val() == ''){
-            alert("请填写工序号！");
+        if($('#employee_id').val() == ''){
+            alert("请选择员工！");
             return false;
         }
-        if($('#order_name').val() == ''){
-            alert("请填写工序名称！");
+        if($('#order_id').val() == ''){
+            alert("请选择订单！");
             return false;
         }
-        if($('#price').val() == ''){
-            alert("请填写单价！");
+        if($('#order_detail_id').val() == ''){
+            alert("请选择工序！");
             return false;
         }
+        if($('#number').val() == ''){
+            alert("请填写数量！");
+            return false;
+        }
+
         var oParam = {
+            employee_id:$('#employee_id').val(),
             order_id:$('#order_id').val(),
-            order_num:$('#order_num').val(),
-            order_name:$('#order_name').val(),
-            price:$('#price').val()
+            order_detail_id:$('#order_detail_id').val(),
+            number:$('#number').val()
         };
         var jParam = JSON.stringify(oParam);
         $.ajax({
             type: "POST",
-            url: "{:url('OrderDetailManager/save')}",
+            url: "{:url('ProductManager/save')}",
             data: 'data=' + jParam,
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
                     alert("添加成功！");
                     $('#addView').modal('toggle');
-                    window.location.href = '{:url("OrderDetailManager/index")}';
+                    window.location.href = '{:url("ProductManager/index")}';
                 }else{
                     alert('添加失败！');
                 }
@@ -198,13 +255,13 @@
         if(confirm("确定删除吗？")){
             $.ajax({
                 type: "POST",
-                url: "{:url('OrderDetailManager/delete')}",
+                url: "{:url('ProductManager/delete')}",
                 data: 'id=' + id,
                 success: function(data){
                     var data = JSON.parse(data);
                     if(data.status == 'success'){
                         alert("删除成功！");
-                        window.location.href = '{:url("OrderDetailManager/index")}';
+                        window.location.href = '{:url("ProductManager/index")}';
                     }else{
                         alert('删除失败！');
                     }
@@ -218,53 +275,85 @@
         var id = $(target).attr("value");
         $.ajax({
             type: "POST",
-            url: "{:url('OrderDetailManager/edit')}",
+            url: "{:url('ProductManager/edit')}",
             data: 'id=' + id,
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    data = data.data;
-                    $('#order_name_id').val(data.id);
-                    $('#edit_order_id option[value="'+ data.order_id +'"]').attr('selected','selected');
-                    $('#edit_order_num').val(data.order_num);
-                    $('#edit_order_name').val(data.name);
-                    $('#edit_price').val(data.price);
+                    $('#product_id').val(data.data.id);
+                    $('#edit_number').val(data.data.number);
+                    var e_str = '';
+                    $.each(data.employeeInfos,function (k,obj) {
+                        var sel = '';
+                        if(data.data.employee_id == obj.id){
+                            sel = 'selected="selected"';
+                        }
+                        e_str += '<option '+ sel +' value="'+ obj.id +'">'+ obj.name +'</option>';
+                    });
+                    e_str = e_str ? e_str : '<option value="">请选择</option>';
+                    $('#edit_employee_id').html(e_str);
+
+                    var o_str = '';
+                    $.each(data.orderInfos,function (k,obj) {
+                        var sel = '';
+                        if(data.data.order_id == obj.id){
+                            sel = 'selected="selected"';
+                        }
+                        o_str += '<option '+ sel +' value="'+ obj.id +'">'+ obj.name +'</option>';
+                    });
+                    o_str = o_str ? o_str : '<option value="">请选择</option>';
+                    $('#edit_order_id').html(o_str);
+
+                    var od_str = '';
+                    $.each(data.orderDetailInfos,function (k,obj) {
+                        var sel = '';
+                        if(data.data.order_detail_id == obj.id){
+                            sel = 'selected="selected"';
+                        }
+                        od_str += '<option '+ sel +' value="'+ obj.id +'">'+ obj.name +'</option>';
+                    });
+                    od_str = od_str ? od_str : '<option value="">请选择</option>';
+                    $('#edit_order_detail_id').html(od_str);
                 }
             }
         });
     });
     //编辑
     $('#edit').click(function(){
-        if($('#edit_order_num').val() == ''){
-            alert("请填写工序号！");
+        if($('#edit_employee_id').val() == ''){
+            alert("请选择员工！");
             return false;
         }
-        if($('#edit_order_name').val() == ''){
-            alert("请填写工序名称！");
+        if($('#edit_order_id').val() == ''){
+            alert("请选择订单！");
             return false;
         }
-        if($('#edit_price').val() == ''){
-            alert("请填写单价！");
+        if($('#edit_order_detail_id').val() == ''){
+            alert("请选择工序！");
+            return false;
+        }
+        if($('#edit_number').val() == ''){
+            alert("请填写数量！");
             return false;
         }
         var oParam = {
+            edit_employee_id:$('#edit_employee_id').val(),
             edit_order_id:$('#edit_order_id').val(),
-            edit_order_num:$('#edit_order_num').val(),
-            edit_order_name:$('#edit_order_name').val(),
-            edit_price:$('#edit_price').val()
+            edit_order_detail_id:$('#edit_order_detail_id').val(),
+            edit_number:$('#edit_number').val()
         };
         var jParam = JSON.stringify(oParam);
-        var id = $('#order_name_id').val();
+        var id = $('#product_id').val();
         $.ajax({
             type: "POST",
-            url: "{:url('OrderDetailManager/update')}",
+            url: "{:url('ProductManager/update')}",
             data: 'id='+ id +'&data=' + jParam,
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
                     alert("编辑成功！");
                     $('#editView').modal('toggle');
-                    window.location.href = '{:url("OrderDetailManager/index")}';
+                    window.location.href = '{:url("ProductManager/index")}';
                 }else{
                     alert('编辑失败！');
                 }
@@ -273,6 +362,6 @@
     });
     //刷新
     $('.btn_refresh').click(function () {
-        window.location.href = '{:url("OrderDetailManager/index")}';
+        window.location.href = '{:url("ProductManager/index")}';
     });
 </script>
