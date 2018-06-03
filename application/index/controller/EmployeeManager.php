@@ -25,7 +25,7 @@ class EmployeeManager extends Controller
             array_push($departInfos,$departInfo);
         }
         //分页显示员工
-        $list = Employee::with('department')->paginate(6);
+        $list = Employee::with('department')->order('create_time desc')->paginate(6);
 //        var_dump(json_encode(Employee::with('department')->select()));
 //        echo Employee::getLastSql();
         // 获取分页显示

@@ -16,7 +16,7 @@ class OrderManager extends Controller
     {
 
         //分页显示订单列表
-        $list = Order::paginate(6);
+        $list = Order::order('create_time desc')->paginate(6);
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
