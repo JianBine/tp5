@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-05-31 23:11:37
+Date: 2018-06-03 23:03:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,15 +45,23 @@ CREATE TABLE `mibine_employee` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_employee
 -- ----------------------------
 INSERT INTO `mibine_employee` VALUES ('3', 'mibine', '0', '1', '2018-05-27 07:40:21', '2018-05-29 23:25:27');
-INSERT INTO `mibine_employee` VALUES ('10', '小月儿', '1', '1', '2018-05-29 21:48:23', '2018-05-29 23:14:07');
+INSERT INTO `mibine_employee` VALUES ('10', '小月儿', '1', '2', '2018-05-29 21:48:23', '2018-05-29 23:14:07');
 INSERT INTO `mibine_employee` VALUES ('16', '小熊', '0', '1', '2018-05-29 23:03:18', '2018-05-29 23:14:31');
 INSERT INTO `mibine_employee` VALUES ('17', '关雎', '0', '1', '2018-05-29 23:16:47', '2018-05-29 23:16:47');
+INSERT INTO `mibine_employee` VALUES ('18', '熊本穷', '0', '1', '2018-06-03 20:32:03', '2018-06-03 20:32:03');
+INSERT INTO `mibine_employee` VALUES ('19', 'test1', '0', '1', '2018-06-03 20:35:05', '2018-06-03 20:35:05');
+INSERT INTO `mibine_employee` VALUES ('20', 'tes2', '0', '1', '2018-06-03 20:35:09', '2018-06-03 20:35:09');
+INSERT INTO `mibine_employee` VALUES ('21', 'tes3', '0', '1', '2018-06-03 20:35:12', '2018-06-03 20:35:12');
+INSERT INTO `mibine_employee` VALUES ('22', 'test4', '0', '1', '2018-06-03 20:35:17', '2018-06-03 20:35:17');
+INSERT INTO `mibine_employee` VALUES ('23', 'test6', '0', '1', '2018-06-03 20:35:21', '2018-06-03 20:35:21');
+INSERT INTO `mibine_employee` VALUES ('24', 'test7', '0', '1', '2018-06-03 20:36:48', '2018-06-03 20:36:48');
+INSERT INTO `mibine_employee` VALUES ('25', 'test8', '0', '1', '2018-06-03 20:36:54', '2018-06-03 20:36:54');
 
 -- ----------------------------
 -- Table structure for `mibine_order`
@@ -66,7 +74,7 @@ CREATE TABLE `mibine_order` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_order
@@ -74,6 +82,7 @@ CREATE TABLE `mibine_order` (
 INSERT INTO `mibine_order` VALUES ('3', 'ST7890', '1000', '2018-05-23 13:50:57', '2018-05-30 22:17:06');
 INSERT INTO `mibine_order` VALUES ('4', 'KT4340', '300', '2018-05-30 00:00:14', '2018-05-30 22:16:59');
 INSERT INTO `mibine_order` VALUES ('5', 'TG3449', '3000', '2018-05-30 22:17:27', '2018-05-30 22:17:27');
+INSERT INTO `mibine_order` VALUES ('8', 'My9501', '100', '2018-06-03 15:19:59', '2018-06-03 15:19:59');
 
 -- ----------------------------
 -- Table structure for `mibine_order_detail`
@@ -84,16 +93,22 @@ CREATE TABLE `mibine_order_detail` (
   `order_id` int(11) DEFAULT NULL COMMENT '订单号id',
   `order_num` int(11) DEFAULT NULL COMMENT '工序号',
   `name` varchar(255) DEFAULT NULL COMMENT '工序名称',
-  `price` decimal(18,0) DEFAULT NULL COMMENT '工序单价',
+  `price` decimal(18,2) DEFAULT NULL COMMENT '工序单价',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_order_detail
 -- ----------------------------
-INSERT INTO `mibine_order_detail` VALUES ('3', '5', '112', '哈哈哈12', '112', '2018-05-31 21:22:00', '2018-05-31 21:43:47');
+INSERT INTO `mibine_order_detail` VALUES ('3', '5', '112', '哈哈哈12', '112.00', '2018-05-31 21:22:00', '2018-05-31 21:43:47');
+INSERT INTO `mibine_order_detail` VALUES ('4', '3', '1', '我是订单1', '0.50', '2018-05-31 14:31:06', '2018-06-03 14:42:10');
+INSERT INTO `mibine_order_detail` VALUES ('5', '3', '2', '我是12', '1.00', '2018-06-03 14:33:55', '2018-06-03 14:33:55');
+INSERT INTO `mibine_order_detail` VALUES ('6', '3', '2', '22', '1.00', '2018-06-03 14:36:56', '2018-06-03 14:36:56');
+INSERT INTO `mibine_order_detail` VALUES ('7', '3', '3', '工序3', '0.56', '2018-06-03 14:40:24', '2018-06-03 14:40:24');
+INSERT INTO `mibine_order_detail` VALUES ('8', '8', '1', '组装', '4.50', '2018-06-03 15:24:55', '2018-06-03 15:24:55');
+INSERT INTO `mibine_order_detail` VALUES ('9', '8', '2', '整理', '0.50', '2018-06-03 15:34:25', '2018-06-03 15:34:25');
 
 -- ----------------------------
 -- Table structure for `mibine_product`
@@ -101,17 +116,36 @@ INSERT INTO `mibine_order_detail` VALUES ('3', '5', '112', '哈哈哈12', '112',
 DROP TABLE IF EXISTS `mibine_product`;
 CREATE TABLE `mibine_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) DEFAULT NULL,
-  `order_detail_id` int(11) DEFAULT NULL,
-  `number` int(11) DEFAULT NULL,
+  `employee_id` int(11) DEFAULT NULL COMMENT '员工ID',
+  `order_id` int(11) DEFAULT NULL COMMENT '订单ID',
+  `order_detail_id` int(11) DEFAULT NULL COMMENT '订单详情ID',
+  `number` int(11) DEFAULT NULL COMMENT '数量',
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_product
 -- ----------------------------
+INSERT INTO `mibine_product` VALUES ('5', '3', '3', '4', '322', '2018-05-31 14:31:24', '2018-05-31 14:31:24');
+INSERT INTO `mibine_product` VALUES ('6', '10', '3', '4', '223', '2018-06-03 14:55:23', '2018-06-03 14:55:23');
+INSERT INTO `mibine_product` VALUES ('7', '3', '8', '8', '22', '2018-06-03 15:30:25', '2018-06-03 15:55:23');
+INSERT INTO `mibine_product` VALUES ('9', '3', '8', '8', '1', '2018-06-03 15:30:55', '2018-06-03 15:30:55');
+INSERT INTO `mibine_product` VALUES ('11', '3', '8', '9', '50', '2018-06-03 15:34:50', '2018-06-03 15:34:50');
+INSERT INTO `mibine_product` VALUES ('13', '3', '8', '8', '76', '2018-06-03 15:44:51', '2018-06-03 15:45:26');
+INSERT INTO `mibine_product` VALUES ('14', '16', '5', '3', '12', '2018-06-03 20:32:26', '2018-06-03 20:32:26');
+INSERT INTO `mibine_product` VALUES ('15', '17', '8', '8', '1', '2018-06-03 20:32:36', '2018-06-03 20:32:36');
+INSERT INTO `mibine_product` VALUES ('16', '16', '5', '3', '12', '2018-06-03 20:32:50', '2018-06-03 20:32:50');
+INSERT INTO `mibine_product` VALUES ('17', '19', '5', '3', '1', '2018-06-03 20:35:34', '2018-06-03 20:35:34');
+INSERT INTO `mibine_product` VALUES ('18', '20', '5', '3', '2', '2018-06-03 20:35:41', '2018-06-03 20:35:41');
+INSERT INTO `mibine_product` VALUES ('19', '21', '8', '9', '3', '2018-06-03 20:35:52', '2018-06-03 20:35:52');
+INSERT INTO `mibine_product` VALUES ('20', '22', '3', '4', '1', '2018-06-03 20:36:03', '2018-06-03 20:36:03');
+INSERT INTO `mibine_product` VALUES ('21', '3', '5', '3', '1', '2018-06-03 20:36:10', '2018-06-03 20:36:10');
+INSERT INTO `mibine_product` VALUES ('22', '23', '3', '5', '32', '2018-06-03 20:36:25', '2018-06-03 20:36:25');
+INSERT INTO `mibine_product` VALUES ('23', '3', '3', '4', '12', '2018-06-03 20:37:03', '2018-06-03 20:37:03');
+INSERT INTO `mibine_product` VALUES ('24', '25', '3', '4', '1', '2018-06-03 20:37:12', '2018-06-03 20:37:12');
+INSERT INTO `mibine_product` VALUES ('25', '24', '3', '4', '32', '2018-06-03 20:37:23', '2018-06-03 20:37:23');
 
 -- ----------------------------
 -- Table structure for `mibine_user`
