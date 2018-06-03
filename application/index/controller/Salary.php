@@ -71,39 +71,26 @@ class Salary extends Controller
             ->setDescription('a describe')
             ->setKeywords('mibine`s datas')
             ->setCategory('Test result file');
-
         //Merge cells
         $objPHPExcel->getActiveSheet()->mergeCells('A1:D1');
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1','报表');
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1','工资报表');
         $objPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
         //Setting title bar
         $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
         $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->setSize(24);
         $objPHPExcel->getActiveSheet()->getRowDimension('1')->setRowHeight(30);//设置行高度
-        // $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFill()->getStartColor()->setARGB('FF808080');
-
         //所有单元格（列）默认宽度
         $objPHPExcel->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
         //行高
         $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(20);
         //添加th
         $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A2','编号')
-            ->setCellValue('B2','姓名')
-            ->setCellValue('C2','金额')
+            ->setCellValue('A2','姓名')
+            ->setCellValue('B2','订单名')
+            ->setCellValue('C2','工资')
             ->setCellValue('D2','日期');
         $objPHPExcel->getActiveSheet()->getStyle('A1:D2')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('A2:D2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
-        ///Add some data
-        $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A3','01')
-            ->setCellValue('B3','mibine')
-            ->setCellValue('C3','100.0')
-            ->setCellValue('D3','2018-05-29');
-        $objPHPExcel->getActiveSheet()->getStyle('A3:D3')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
-        //Rename bottom worksheet
-        $objPHPExcel->getActiveSheet()->setTitle('Simple');
-
         //Setting border
         $styleThinBlackBorderOutline = array(
             'borders' => array(
@@ -113,12 +100,27 @@ class Salary extends Controller
                 ),
             ),
         );//outline-allborders
-        $objPHPExcel->getActiveSheet()->getStyle('A1:D4')->applyFromArray($styleThinBlackBorderOutline);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:D2')->applyFromArray($styleThinBlackBorderOutline);
+        foreach ($list as $key => $value){
+            $index = $key + 3;
+            $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('A'.$index,$value['e_name'])
+                ->setCellValue('B'.$index,$value['order_name'])
+                ->setCellValue('C'.$index,$value['total_money'])
+                ->setCellValue('D'.$index,$value['create_time']);
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$index.':D'.$index)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
-        //Save Excel 2017 file
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$index.':D'.$index)->applyFromArray($styleThinBlackBorderOutline);
+         }
+        //Rename bottom worksheet
+        $objPHPExcel->getActiveSheet()->setTitle('Salary');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
-        $path = '/home/text1.xlsx';
+        $path = config('excel_path').'text1.xlsx';
         $objWriter->save($path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="'.basename($path) .'"');
+        header("Content-Length: ".filesize($path));
+        readfile($path);
     }
 
     /**

@@ -17,6 +17,7 @@
                     <input class="form-control" type="text" id="totime" placeholder="" autocomplete="off">
                 </div>
                 <button class="btn btn-default btn-sm btn_query" type="submit">查询</button>
+                <button class="btn btn-default btn-sm btn_export" type="submit">导出</button>
             </div>
         </form>
     </div>
@@ -53,12 +54,12 @@
         elem: '#totime'
     });
     //查询
-    $('.btn_query').click(function () {
+    $('.btn_export').click(function () {
         // var ordername = $('#ordername').val();
         var fromtime = $('#fromtime').val();
         var totime = $('#totime').val();
         // var params = 'ordername='+ ordername +'&fromtime='+ fromtime + '&totime=' + totime;
         var params = 'fromtime='+ fromtime + '&totime=' + totime;
-        window.location.href = '{:url("Salary/index")}' + '?' + params;
+        window.location.href = '{:url("Salary/export")}' + '?' + params;
     });
 </script>
