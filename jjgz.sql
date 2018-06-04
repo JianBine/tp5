@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50556
 File Encoding         : 65001
 
-Date: 2018-06-03 23:03:57
+Date: 2018-06-05 23:29:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,7 +45,7 @@ CREATE TABLE `mibine_employee` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_employee
@@ -62,6 +62,14 @@ INSERT INTO `mibine_employee` VALUES ('22', 'test4', '0', '1', '2018-06-03 20:35
 INSERT INTO `mibine_employee` VALUES ('23', 'test6', '0', '1', '2018-06-03 20:35:21', '2018-06-03 20:35:21');
 INSERT INTO `mibine_employee` VALUES ('24', 'test7', '0', '1', '2018-06-03 20:36:48', '2018-06-03 20:36:48');
 INSERT INTO `mibine_employee` VALUES ('25', 'test8', '0', '1', '2018-06-03 20:36:54', '2018-06-03 20:36:54');
+INSERT INTO `mibine_employee` VALUES ('26', 'admin', '0', '1', '2018-06-04 00:03:52', '2018-06-04 00:03:52');
+INSERT INTO `mibine_employee` VALUES ('27', 'sss', '0', '1', '2018-06-04 00:04:07', '2018-06-04 00:04:07');
+INSERT INTO `mibine_employee` VALUES ('28', 'admin', '0', '1', '2018-06-04 00:04:39', '2018-06-04 00:04:39');
+INSERT INTO `mibine_employee` VALUES ('29', '2', '0', '1', '2018-06-04 00:05:05', '2018-06-04 00:05:05');
+INSERT INTO `mibine_employee` VALUES ('30', 'z', '0', '1', '2018-06-04 00:06:17', '2018-06-04 00:06:17');
+INSERT INTO `mibine_employee` VALUES ('31', '33', '0', '1', '2018-06-04 00:06:30', '2018-06-04 00:06:30');
+INSERT INTO `mibine_employee` VALUES ('32', 'dd', '0', '1', '2018-06-04 00:06:46', '2018-06-04 00:06:46');
+INSERT INTO `mibine_employee` VALUES ('33', 'dd', '0', '1', '2018-06-04 00:06:51', '2018-06-04 00:06:51');
 
 -- ----------------------------
 -- Table structure for `mibine_order`
@@ -74,7 +82,7 @@ CREATE TABLE `mibine_order` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_order
@@ -97,7 +105,7 @@ CREATE TABLE `mibine_order_detail` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_order_detail
@@ -108,7 +116,6 @@ INSERT INTO `mibine_order_detail` VALUES ('5', '3', '2', '我是12', '1.00', '20
 INSERT INTO `mibine_order_detail` VALUES ('6', '3', '2', '22', '1.00', '2018-06-03 14:36:56', '2018-06-03 14:36:56');
 INSERT INTO `mibine_order_detail` VALUES ('7', '3', '3', '工序3', '0.56', '2018-06-03 14:40:24', '2018-06-03 14:40:24');
 INSERT INTO `mibine_order_detail` VALUES ('8', '8', '1', '组装', '4.50', '2018-06-03 15:24:55', '2018-06-03 15:24:55');
-INSERT INTO `mibine_order_detail` VALUES ('9', '8', '2', '整理', '0.50', '2018-06-03 15:34:25', '2018-06-03 15:34:25');
 
 -- ----------------------------
 -- Table structure for `mibine_product`
@@ -123,7 +130,7 @@ CREATE TABLE `mibine_product` (
   `create_time` datetime DEFAULT NULL,
   `update_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_product
@@ -153,17 +160,15 @@ INSERT INTO `mibine_product` VALUES ('25', '24', '3', '4', '32', '2018-06-03 20:
 DROP TABLE IF EXISTS `mibine_user`;
 CREATE TABLE `mibine_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) DEFAULT NULL COMMENT '登陆账号',
+  `username` varchar(20) DEFAULT NULL COMMENT '登陆账号',
   `password` varchar(255) DEFAULT NULL COMMENT '密码',
   `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
   `create_time` datetime DEFAULT NULL COMMENT '添加时间',
   `update_time` datetime DEFAULT NULL,
-  `department_id` int(11) DEFAULT NULL COMMENT '所在部门Id',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mibine_user
 -- ----------------------------
-INSERT INTO `mibine_user` VALUES ('1', null, null, '李剑斌', '0000-00-00 00:00:00', '0000-00-00 00:00:00', null);
-INSERT INTO `mibine_user` VALUES ('2', null, null, '李剑斌', '0000-00-00 00:00:00', '0000-00-00 00:00:00', null);
+INSERT INTO `mibine_user` VALUES ('1', 'admin', 'a66abb5684c45962d887564f08346e8d', '管理员', '2018-06-05 23:07:34', '2018-06-05 23:07:38');
