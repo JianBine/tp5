@@ -30,10 +30,6 @@ class ProductManager extends Controller
             $totime = date('Y-m-d 23:59:59',strtotime($totime));
             $whereArray['create_time'] = array('between',array($fromtime,$totime));
         }
-//        $whereArr = array();
-//        if($ordername = input('ordername')){
-//            $whereArr['name'] = $ordername;
-//        }
         $list = Product::where($whereArray)
             ->with(['Employee','Order','OrderDetail'])
             ->order('create_time desc')
@@ -46,7 +42,91 @@ class ProductManager extends Controller
         $this->assign('page', $page);
         return $this->fetch('Product/index');
     }
+    /**
+     * 详情订单工序详情导出
+     */
+    public function export(){
+        //导出的数据
+        $whereArray = array();
+        if(input('fromtime') && input('totime')){
+            $fromtime = input('fromtime');
+            $totime = input('totime');
+            $fromtime = date('Y-m-d 00:00:00',strtotime($fromtime));
+            $totime = date('Y-m-d 23:59:59',strtotime($totime));
+            $whereArray['create_time'] = array('between',array($fromtime,$totime));
+        }
+        $list = Product::where($whereArray)
+            ->with(['Employee','Order','OrderDetail'])
+            ->order('employee_id asc,create_time desc')
+            ->select();
+        //导出excel
+        $objPHPExcel = new \PHPExcel();
+        //Set document properties
+        $objPHPExcel->getProperties()->setCreator('mibine')
+            ->setLastModifiedBy('mibine')
+            ->setTitle('This is a Excel file')
+            ->setSubject('xxx')
+            ->setDescription('a describe')
+            ->setKeywords('mibine`s datas')
+            ->setCategory('Test result file');
+        //Merge cells
+        $objPHPExcel->getActiveSheet()->mergeCells('A1:G1');
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A1','订单详细报表');
+        $objPHPExcel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        //Setting title bar
+        $objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFill()->setFillType(\PHPExcel_Style_Fill::FILL_SOLID);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:G1')->getFont()->setSize(24);
+        $objPHPExcel->getActiveSheet()->getRowDimension('1')->setRowHeight(30);//设置行高度
+        //所有单元格（列）默认宽度
+        $objPHPExcel->getActiveSheet()->getDefaultColumnDimension()->setWidth(11);
+        //行高
+        $objPHPExcel->getActiveSheet()->getDefaultRowDimension()->setRowHeight(20);
+        //员工	订单名	工序号	工序名称	单价	数量	创建时间	操作
+        //添加th
+        $objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('A2','姓名')
+            ->setCellValue('B2','订单名')
+            ->setCellValue('C2','工序号')
+            ->setCellValue('D2','工序名称')
+            ->setCellValue('E2','单价')
+            ->setCellValue('F2','数量')
+            ->setCellValue('G2','时间');
+        $objPHPExcel->getActiveSheet()->getStyle('A1:G2')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('A2:G2')->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
+        //Setting border
+        $styleThinBlackBorderOutline = array(
+            'borders' => array(
+                'allborders' => array(
+                    'style' => \PHPExcel_Style_Border::BORDER_THIN,
+                    'color' => array('argb' => 'FF000000')
+                ),
+            ),
+        );//outline-allborders
+        $objPHPExcel->getActiveSheet()->getStyle('A1:G2')->applyFromArray($styleThinBlackBorderOutline);
+        foreach ($list as $key => $value){
+            $index = $key + 3;
+            $objPHPExcel->setActiveSheetIndex(0)
+                ->setCellValue('A'.$index,$value['employee']['name'])
+                ->setCellValue('B'.$index,$value['order']['name'])
+                ->setCellValue('C'.$index,$value['order_detail']['order_num'])
+                ->setCellValue('D'.$index,$value['order_detail']['name'])
+                ->setCellValue('E'.$index,$value['order_detail']['price'])
+                ->setCellValue('F'.$index,$value['number'])
+                ->setCellValue('G'.$index,date('Y-m-d',strtotime($value['create_time'])));
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$index.':G'.$index)->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::VERTICAL_CENTER);
 
+            $objPHPExcel->getActiveSheet()->getStyle('A'.$index.':G'.$index)->applyFromArray($styleThinBlackBorderOutline);
+        }
+        //Rename bottom worksheet
+        $objPHPExcel->getActiveSheet()->setTitle('Salary');
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
+        $path = config('excel_path').'order_detail.xlsx';
+        $objWriter->save($path);
+        header("Content-type: application/octet-stream");
+        header('Content-Disposition: attachment; filename="'.basename($path) .'"');
+        header("Content-Length: ".filesize($path));
+        readfile($path);
+    }
     /**
      * 显示创建资源表单页.
      *

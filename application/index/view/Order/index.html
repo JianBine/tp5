@@ -1,4 +1,4 @@
-<h5>工作管理/订单列表</h5>
+<h5>工作管理/订单管理</h5>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading"></div>
@@ -122,11 +122,13 @@
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    alert("添加成功！");
+                    toastr.success('添加成功！');
                     $('#addView').modal('toggle');
-                    window.location.href = '{:url("OrderManager/index")}';
+                    setTimeout(function () {
+                        window.location.href = '{:url("OrderManager/index")}';
+                    },1000);
                 }else{
-                    alert('添加失败！');
+                    toastr.error('添加失败！');
                 }
             }
         });
@@ -143,10 +145,12 @@
                 success: function(data){
                     var data = JSON.parse(data);
                     if(data.status == 'success'){
-                        alert("删除成功！");
-                        window.location.href = '{:url("OrderManager/index")}';
+                        toastr.success('删除成功！');
+                        setTimeout(function () {
+                            window.location.href = '{:url("OrderManager/index")}';
+                        },1000);
                     }else{
-                        alert('删除失败！');
+                        toastr.error('删除失败！');
                     }
                 }
             });
@@ -194,11 +198,13 @@
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    alert("编辑成功！");
+                    toastr.success('编辑成功！');
                     $('#editView').modal('toggle');
-                    window.location.href = '{:url("OrderManager/index")}';
+                    setTimeout(function () {
+                        window.location.href = '{:url("OrderManager/index")}';
+                    },1000);
                 }else{
-                    alert('编辑失败！');
+                    toastr.error('编辑失败！');
                 }
             }
         });

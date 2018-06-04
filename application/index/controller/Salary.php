@@ -115,7 +115,7 @@ class Salary extends Controller
         //Rename bottom worksheet
         $objPHPExcel->getActiveSheet()->setTitle('Salary');
         $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel,'Excel2007');
-        $path = config('excel_path').'text1.xlsx';
+        $path = config('excel_path').'salary.xlsx';
         $objWriter->save($path);
         header("Content-type: application/octet-stream");
         header('Content-Disposition: attachment; filename="'.basename($path) .'"');

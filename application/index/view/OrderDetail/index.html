@@ -1,11 +1,11 @@
-<h5>工作管理/订单详情</h5>
+<h5>工作管理/订单详情管理</h5>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">
         <form class="form-horizontal">
             <div class="form-group form-group-sm">
-                <label class="col-sm-1 control-label" for="ordername">订单名：</label>
-                <div class="col-sm-2">
+                <label class="col-sm-1 col-xs-2 control-label" for="ordername">订单名：</label>
+                <div class="col-sm-2 col-xs-3">
                     <input class="form-control" type="text" id="ordername" placeholder="" required>
                 </div>
                 <!--<label class="col-sm-1 control-label" for="ordername">起始时间：</label>-->
@@ -180,11 +180,13 @@
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    alert("添加成功！");
+                    toastr.success('添加成功！');
                     $('#addView').modal('toggle');
-                    window.location.href = '{:url("OrderDetailManager/index")}';
+                    setTimeout(function () {
+                        window.location.href = '{:url("OrderDetailManager/index")}';
+                    },1000);
                 }else{
-                    alert('添加失败！');
+                    toastr.error('添加失败！');
                 }
             }
         });
@@ -201,10 +203,12 @@
                 success: function(data){
                     var data = JSON.parse(data);
                     if(data.status == 'success'){
-                        alert("删除成功！");
-                        window.location.href = '{:url("OrderDetailManager/index")}';
+                        toastr.success('删除成功！');
+                        setTimeout(function () {
+                            window.location.href = '{:url("OrderDetailManager/index")}';
+                        },1000);
                     }else{
-                        alert('删除失败！');
+                        toastr.error('删除失败！');
                     }
                 }
             });
@@ -260,11 +264,13 @@
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    alert("编辑成功！");
+                    toastr.success('编辑成功！');
                     $('#editView').modal('toggle');
-                    window.location.href = '{:url("OrderDetailManager/index")}';
+                    setTimeout(function () {
+                        window.location.href = '{:url("OrderDetailManager/index")}';
+                    },1000);
                 }else{
-                    alert('编辑失败！');
+                    toastr.error('编辑失败！');
                 }
             }
         });

@@ -1,4 +1,4 @@
-<h5>工作管理/产档详情</h5>
+<h5>工作管理/产档管理</h5>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading">
@@ -8,15 +8,16 @@
                 <!--<div class="col-sm-2">-->
                     <!--<input class="form-control" type="text" id="ordername" placeholder="" required>-->
                 <!--</div>-->
-                <label class="col-sm-1 control-label" for="fromtime">起始时间：</label>
-                <div class="col-sm-2">
+                <label class="col-sm-1 col-xs-2 control-label" for="fromtime">起始时间：</label>
+                <div class="col-sm-2 col-xs-2">
                 <input class="form-control" type="text" id="fromtime" placeholder="" autocomplete="off">
                 </div>
-                <label class="col-sm-1 control-label" for="totime">结束时间：</label>
-                <div class="col-sm-2">
+                <label class="col-sm-1 col-xs-2 control-label" for="totime">结束时间：</label>
+                <div class="col-sm-2 col-xs-2">
                 <input class="form-control" type="text" id="totime" placeholder="" autocomplete="off">
                 </div>
                 <button class="btn btn-default btn-sm btn_query" type="submit">查询</button>
+                <button class="btn btn-default btn-sm btn_export" type="submit">导出</button>
             </div>
         </form>
     </div>
@@ -247,12 +248,14 @@
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    alert("添加成功！");
+                    toastr.success('添加成功！');
                     $('#addView').modal('toggle');
-                    window.location.href = '{:url("ProductManager/index")}';
+                    setTimeout(function () {
+                        window.location.href = '{:url("ProductManager/index")}';
+                    },1000);
                 }else{
                     var val = data.value ? '超过报警数，超额数量为' + data.value : '';
-                    alert('添加失败！' + val);
+                    toastr.error('添加失败！' + val);
                 }
             }
         });
@@ -269,10 +272,12 @@
                 success: function(data){
                     var data = JSON.parse(data);
                     if(data.status == 'success'){
-                        alert("删除成功！");
-                        window.location.href = '{:url("ProductManager/index")}';
+                        toastr.success('删除成功！');
+                        setTimeout(function () {
+                            window.location.href = '{:url("ProductManager/index")}';
+                        },1000);
                     }else{
-                        alert('删除失败！');
+                        toastr.error('删除失败！');
                     }
                 }
             });
@@ -360,12 +365,14 @@
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    alert("编辑成功！");
+                    toastr.success('编辑成功！');
                     $('#editView').modal('toggle');
-                    window.location.href = '{:url("ProductManager/index")}';
+                    setTimeout(function () {
+                        window.location.href = '{:url("ProductManager/index")}';
+                    },1000);
                 }else{
                     var val = data.value ? '超过报警数，超额数量为' + data.value : '';
-                    alert('编辑失败！' + val);
+                    toastr.error('编辑失败！' + val);
                 }
             }
         });
@@ -382,5 +389,12 @@
         // var params = 'ordername='+ ordername +'&fromtime='+ fromtime + '&totime=' + totime;
         var params = 'fromtime='+ fromtime + '&totime=' + totime;
         window.location.href = '{:url("ProductManager/index")}' + '?' + params;
+    });
+    //查询
+    $('.btn_export').click(function () {
+        var fromtime = $('#fromtime').val();
+        var totime = $('#totime').val();
+        var params = 'fromtime='+ fromtime + '&totime=' + totime;
+        window.location.href = '{:url("ProductManager/export")}' + '?' + params;
     });
 </script>

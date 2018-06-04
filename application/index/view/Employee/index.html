@@ -1,4 +1,4 @@
-<h5>工作管理/人员名单</h5>
+<h5>工作管理/员工管理</h5>
 <div class="panel panel-default">
     <!-- Default panel contents -->
     <div class="panel-heading"></div>
@@ -159,11 +159,13 @@ $('#add').click(function(){
         success: function(data){
             var data = JSON.parse(data);
             if(data.status == 'success'){
-                alert("添加成功！");
+                toastr.success('添加成功！');
                 $('#addView').modal('toggle');
-                window.location.href = '{:url("EmployeeManager/index")}';
+                setTimeout(function () {
+                    window.location.href = '{:url("EmployeeManager/index")}';
+                },1000);
             }else{
-                alert('添加失败！');
+                toastr.error('添加失败！');
             }
         }
     });
@@ -180,10 +182,12 @@ $('.btn_del').click(function (e) {
             success: function(data){
                 var data = JSON.parse(data);
                 if(data.status == 'success'){
-                    alert("删除成功！");
-                    window.location.href = '{:url("EmployeeManager/index")}';
+                    toastr.success('删除成功！');
+                    setTimeout(function () {
+                        window.location.href = '{:url("EmployeeManager/index")}';
+                    },1000);
                 }else{
-                    alert('删除失败！');
+                    toastr.error('删除失败！');
                 }
             }
         });
@@ -229,11 +233,13 @@ $('#edit').click(function(){
         success: function(data){
             var data = JSON.parse(data);
             if(data.status == 'success'){
-                alert("编辑成功！");
+                toastr.success('编辑成功！');
                 $('#editView').modal('toggle');
-                window.location.href = '{:url("EmployeeManager/index")}';
+                setTimeout(function () {
+                    window.location.href = '{:url("EmployeeManager/index")}';
+                },1000);
             }else{
-                alert('编辑失败！');
+                toastr.success('编辑失败！');
             }
         }
     });
